@@ -116,19 +116,31 @@ document.addEventListener('DOMContentLoaded', async function(){
     return date.toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
   }
 
+  const SHARED_MONTH_KEY = 'azko_dashboard_selected_month';
+
   function getSelectedMonth() {
-    const stored = localStorage.getItem('azko_customer_service_selected_month');
+    const stored = localStorage.getItem(SHARED_MONTH_KEY);
     if (stored) {
       return normalizeMonthKey(stored);
     }
     const currentMonth = getMonthKey();
-    localStorage.setItem('azko_customer_service_selected_month', currentMonth);
+    localStorage.setItem(SHARED_MONTH_KEY, currentMonth);
     return currentMonth;
   }
 
-  function setSelectedMonth(monthKey) {
+  async function setSelectedMonth(monthKey) {
     const normalized = normalizeMonthKey(monthKey);
-    localStorage.setItem('azko_customer_service_selected_month', normalized);
+    localStorage.setItem(SHARED_MONTH_KEY, normalized);
+    localStorage.setItem('azko_dashboard_content_version', String(Date.now()));
+    try {
+      await window.AZKOAuth?.apiCall?.('/api/shared-state', {
+        method: 'PUT',
+        body: JSON.stringify({ selectedMonth: normalized, customerService: { selectedMonth: normalized } })
+      });
+    } catch (error) {
+      console.warn('Unable to sync selected month to server', error);
+    }
+    window.dispatchEvent(new CustomEvent('azko:dashboard-month-changed', { detail: { monthKey: normalized } }));
     return normalized;
   }
 
@@ -177,6 +189,19 @@ document.addEventListener('DOMContentLoaded', async function(){
   function getAchievements(monthKey = getSelectedMonth()) {
     const stored = getStoredAchievements(monthKey);
     return Array.isArray(stored) ? stored : [];
+  }
+
+  async function restoreSharedStateFromServer() {
+    try {
+      const response = await window.AZKOAuth?.apiCall?.('/api/shared-state');
+      if (response?.selectedMonth) {
+        const normalized = normalizeMonthKey(response.selectedMonth);
+        localStorage.setItem('azko_dashboard_selected_month', normalized);
+        localStorage.setItem('azko_dashboard_content_version', String(Date.now()));
+      }
+    } catch (error) {
+      console.warn('Unable to restore shared state from server', error);
+    }
   }
 
   function populateMonthSelector() {
@@ -690,7 +715,7 @@ document.addEventListener('DOMContentLoaded', async function(){
 
   if (monitoringMonthSelect) {
     monitoringMonthSelect.addEventListener('change', async function() {
-      const selectedMonth = setSelectedMonth(this.value);
+      const selectedMonth = await setSelectedMonth(this.value);
       populateMonthSelector();
       await loadData();
       renderMonitoringHeader();

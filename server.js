@@ -17,6 +17,7 @@ app.use(express.static(path.join(__dirname)));
 const USERS_FILE = path.join(__dirname, 'assets/data/users.json');
 const DASHBOARD_DATA_FILE = path.join(__dirname, 'assets/data/dashboard-data.json');
 const MONITORING_DATA_FILE = path.join(__dirname, 'assets/data/monitoring-data.json');
+const SHARED_STATE_FILE = path.join(__dirname, 'assets/data/shared-state.json');
 
 // Default users
 const DEFAULT_USERS = [
@@ -35,6 +36,21 @@ function initializeDataFiles() {
   if (!fs.existsSync(MONITORING_DATA_FILE)) {
     fs.writeFileSync(MONITORING_DATA_FILE, JSON.stringify({ data: [] }, null, 2));
   }
+  if (!fs.existsSync(SHARED_STATE_FILE)) {
+    fs.writeFileSync(SHARED_STATE_FILE, JSON.stringify({ selectedMonth: null, dashboard: {}, monitoring: {}, customerService: {}, updatedAt: null }, null, 2));
+  }
+}
+
+function readSharedState() {
+  try {
+    return JSON.parse(fs.readFileSync(SHARED_STATE_FILE, 'utf8'));
+  } catch (e) {
+    return { selectedMonth: null, dashboard: {}, monitoring: {}, customerService: {}, updatedAt: null };
+  }
+}
+
+function saveSharedState(state) {
+  fs.writeFileSync(SHARED_STATE_FILE, JSON.stringify(state, null, 2));
 }
 
 // Helper functions
@@ -138,6 +154,35 @@ app.get('/api/auth/me', authenticateToken, (req, res) => {
 // Logout (optional - mainly for frontend)
 app.post('/api/auth/logout', authenticateToken, (req, res) => {
   res.json({ message: 'Logged out successfully' });
+});
+
+// ===== SHARED STATE ENDPOINTS =====
+app.get('/api/shared-state', authenticateToken, (req, res) => {
+  res.json(readSharedState());
+});
+
+app.put('/api/shared-state', authenticateToken, (req, res) => {
+  const current = readSharedState();
+  const incoming = req.body || {};
+  const updated = {
+    ...current,
+    ...incoming,
+    updatedAt: new Date().toISOString(),
+    updatedBy: req.user?.username || 'unknown'
+  };
+
+  if (incoming.dashboard) {
+    updated.dashboard = { ...(current.dashboard || {}), ...(incoming.dashboard || {}) };
+  }
+  if (incoming.monitoring) {
+    updated.monitoring = { ...(current.monitoring || {}), ...(incoming.monitoring || {}) };
+  }
+  if (incoming.customerService) {
+    updated.customerService = { ...(current.customerService || {}), ...(incoming.customerService || {}) };
+  }
+
+  saveSharedState(updated);
+  res.json(updated);
 });
 
 // ===== DASHBOARD ENDPOINTS =====

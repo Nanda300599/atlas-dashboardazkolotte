@@ -27,6 +27,8 @@ document.addEventListener('DOMContentLoaded', function(){
     { title: 'Monitoring', icon: 'fa-sliders', description: 'Flexible operational checks and escalations' }
   ];
 
+  const SHARED_MONTH_KEY = 'azko_dashboard_selected_month';
+
   function getSharedDashboardSnapshot(monthKey = getSelectedMonth()) {
     try {
       const stored = localStorage.getItem('azko_dashboard_shared_snapshot');
@@ -64,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function(){
     return { primaryItems, secondaryItems };
   }
 
-  function persistSharedDashboardSnapshot(monthKey = getSelectedMonth(), source = 'admin') {
+  async function persistSharedDashboardSnapshot(monthKey = getSelectedMonth(), source = 'admin') {
     const normalizedMonth = normalizeMonthKey(monthKey);
     const snapshot = {
       monthKey: normalizedMonth,
@@ -81,6 +83,14 @@ document.addEventListener('DOMContentLoaded', function(){
     };
     localStorage.setItem('azko_dashboard_shared_snapshot', JSON.stringify(snapshot));
     localStorage.setItem('azko_dashboard_content_version', String(Date.now()));
+    try {
+      await window.AZKOAuth?.apiCall?.('/api/shared-state', {
+        method: 'PUT',
+        body: JSON.stringify({ selectedMonth: normalizedMonth, dashboard: { snapshot, selectedMonth: normalizedMonth, updatedBy: source } })
+      });
+    } catch (error) {
+      console.warn('Unable to sync dashboard snapshot to server', error);
+    }
     return snapshot;
   }
 
@@ -97,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function(){
     return true;
   }
 
-  function initializeDashboardMonthData(){
+  async function initializeDashboardMonthData(){
     const currentMonth = getSelectedMonth();
     const sharedSnapshot = getSharedDashboardSnapshot(currentMonth);
     const ensureMonthValue = (key, fallbackValue) => {
@@ -130,6 +140,18 @@ document.addEventListener('DOMContentLoaded', function(){
     if (sharedSnapshot) {
       applySharedDashboardSnapshot(sharedSnapshot, currentMonth);
     }
+    try {
+      const response = await window.AZKOAuth?.apiCall?.('/api/shared-state');
+      if (response?.selectedMonth) {
+        const normalized = normalizeMonthKey(response.selectedMonth);
+        localStorage.setItem(SHARED_MONTH_KEY, normalized);
+        if (response.dashboard?.snapshot) {
+          applySharedDashboardSnapshot(response.dashboard.snapshot, normalized);
+        }
+      }
+    } catch (error) {
+      console.warn('Unable to load shared state from server', error);
+    }
     syncDashboardMonthContent(currentMonth, 'system');
     window.dispatchEvent(new Event('azko:content-updated'));
   }
@@ -156,18 +178,28 @@ document.addEventListener('DOMContentLoaded', function(){
   }
 
   function getSelectedMonth(){
-    const stored = localStorage.getItem('azko_dashboard_selected_month');
+    const stored = localStorage.getItem(SHARED_MONTH_KEY);
     if (stored) {
       return normalizeMonthKey(stored);
     }
     const currentMonth = getMonthKey();
-    localStorage.setItem('azko_dashboard_selected_month', currentMonth);
+    localStorage.setItem(SHARED_MONTH_KEY, currentMonth);
     return currentMonth;
   }
 
-  function setSelectedMonth(monthKey){
+  async function setSelectedMonth(monthKey){
     const normalized = normalizeMonthKey(monthKey);
-    localStorage.setItem('azko_dashboard_selected_month', normalized);
+    localStorage.setItem(SHARED_MONTH_KEY, normalized);
+    localStorage.setItem('azko_dashboard_content_version', String(Date.now()));
+    try {
+      await window.AZKOAuth?.apiCall?.('/api/shared-state', {
+        method: 'PUT',
+        body: JSON.stringify({ selectedMonth: normalized, dashboard: { selectedMonth: normalized } })
+      });
+    } catch (error) {
+      console.warn('Unable to sync selected month to server', error);
+    }
+    window.dispatchEvent(new CustomEvent('azko:dashboard-month-changed', { detail: { monthKey: normalized } }));
     return normalized;
   }
 
@@ -291,20 +323,49 @@ document.addEventListener('DOMContentLoaded', function(){
     syncEditableHints();
   }
 
+  async function syncFromServer() {
+    try {
+      const response = await window.AZKOAuth?.apiCall?.('/api/shared-state');
+      if (!response) return;
+      if (response.selectedMonth) {
+        const normalizedMonth = normalizeMonthKey(response.selectedMonth);
+        localStorage.setItem(SHARED_MONTH_KEY, normalizedMonth);
+        if (response.dashboard?.snapshot) {
+          applySharedDashboardSnapshot(response.dashboard.snapshot, normalizedMonth);
+        }
+      }
+      refreshDashboardContent();
+      populateMonthSelector();
+    } catch (error) {
+      console.warn('Unable to sync from server', error);
+    }
+  }
+
   window.addEventListener('azko:content-updated', refreshDashboardContent);
+  window.addEventListener('azko:dashboard-month-changed', async function(event){
+    const monthKey = event.detail?.monthKey;
+    if (!monthKey) return;
+    await setSelectedMonth(monthKey);
+    refreshDashboardContent();
+    populateMonthSelector();
+  });
   window.addEventListener('storage', function(event){
     if (!event.key) return;
-    if (event.key === 'azko_dashboard_content_version' || event.key.startsWith('azko_')) {
+    if (event.key === SHARED_MONTH_KEY || event.key === 'azko_dashboard_content_version' || event.key.startsWith('azko_')) {
       refreshDashboardContent();
+      if (event.key === SHARED_MONTH_KEY) {
+        populateMonthSelector();
+      }
     }
   });
-  window.addEventListener('focus', refreshDashboardContent);
-  window.addEventListener('pageshow', refreshDashboardContent);
+  window.addEventListener('focus', () => { syncFromServer(); });
+  window.addEventListener('pageshow', () => { syncFromServer(); });
   document.addEventListener('visibilitychange', function(){
     if (document.visibilityState === 'visible') {
-      refreshDashboardContent();
+      syncFromServer();
     }
   });
+  window.setInterval(syncFromServer, 10000);
 
   function getActivityLog(){
     try {
@@ -836,11 +897,11 @@ document.addEventListener('DOMContentLoaded', function(){
     }
 
     Array.from(optionsContainer.querySelectorAll('.month-picker-option')).forEach(button => {
-      button.addEventListener('click', function() {
+      button.addEventListener('click', async function() {
         const selectedMonth = this.getAttribute('data-month');
         if (!selectedMonth) return;
-        setSelectedMonth(selectedMonth);
-        syncDashboardMonthContent(selectedMonth, 'admin');
+        const normalizedMonth = await setSelectedMonth(selectedMonth);
+        syncDashboardMonthContent(normalizedMonth, 'admin');
         populateMonthSelector();
         if (popover) popover.hidden = true;
         trigger.setAttribute('aria-expanded', 'false');

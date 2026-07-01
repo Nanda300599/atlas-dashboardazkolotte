@@ -117,19 +117,31 @@ document.addEventListener('DOMContentLoaded', async function(){
     return date.toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
   }
 
+  const SHARED_MONTH_KEY = 'azko_dashboard_selected_month';
+
   function getSelectedMonth() {
-    const stored = localStorage.getItem('azko_monitoring_selected_month');
+    const stored = localStorage.getItem(SHARED_MONTH_KEY);
     if (stored) {
       return normalizeMonthKey(stored);
     }
     const currentMonth = getMonthKey();
-    localStorage.setItem('azko_monitoring_selected_month', currentMonth);
+    localStorage.setItem(SHARED_MONTH_KEY, currentMonth);
     return currentMonth;
   }
 
-  function setSelectedMonth(monthKey) {
+  async function setSelectedMonth(monthKey) {
     const normalized = normalizeMonthKey(monthKey);
-    localStorage.setItem('azko_monitoring_selected_month', normalized);
+    localStorage.setItem(SHARED_MONTH_KEY, normalized);
+    localStorage.setItem('azko_dashboard_content_version', String(Date.now()));
+    try {
+      await window.AZKOAuth?.apiCall?.('/api/shared-state', {
+        method: 'PUT',
+        body: JSON.stringify({ selectedMonth: normalized, monitoring: { selectedMonth: normalized } })
+      });
+    } catch (error) {
+      console.warn('Unable to sync selected month to server', error);
+    }
+    window.dispatchEvent(new CustomEvent('azko:dashboard-month-changed', { detail: { monthKey: normalized } }));
     return normalized;
   }
 
@@ -180,6 +192,19 @@ document.addEventListener('DOMContentLoaded', async function(){
     return Array.isArray(stored) ? stored : [];
   }
 
+  async function restoreSharedStateFromServer() {
+    try {
+      const response = await window.AZKOAuth?.apiCall?.('/api/shared-state');
+      if (response?.selectedMonth) {
+        const normalized = normalizeMonthKey(response.selectedMonth);
+        localStorage.setItem('azko_dashboard_selected_month', normalized);
+        localStorage.setItem('azko_dashboard_content_version', String(Date.now()));
+      }
+    } catch (error) {
+      console.warn('Unable to restore shared state from server', error);
+    }
+  }
+
   function populateMonthSelector() {
     const trigger = document.getElementById('monitoringMonthTrigger');
     const triggerLabel = document.getElementById('monitoringMonthTriggerLabel');
@@ -208,14 +233,14 @@ document.addEventListener('DOMContentLoaded', async function(){
       button.addEventListener('click', async function() {
         const selectedMonth = this.getAttribute('data-month');
         if (!selectedMonth) return;
-        setSelectedMonth(selectedMonth);
+        const normalizedMonth = await setSelectedMonth(selectedMonth);
         populateMonthSelector();
         if (popover) popover.hidden = true;
         trigger.setAttribute('aria-expanded', 'false');
         await loadData();
         renderMonitoringHeader();
         renderAchievementTable();
-        if (monitoringMonthCaption) monitoringMonthCaption.textContent = `Data akan disimpan untuk ${formatMonthLabel(getSelectedMonth())}.`;
+        if (monitoringMonthCaption) monitoringMonthCaption.textContent = `Data akan disimpan untuk ${formatMonthLabel(normalizedMonth)}.`;
       });
     });
   }

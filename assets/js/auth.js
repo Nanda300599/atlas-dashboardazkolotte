@@ -226,8 +226,11 @@
     createUser,
     updateUser,
     resetPassword,
-    deleteUser
+    deleteUser,
+    apiCall
   };
+
+  window.AZKOAuth.apiCall = apiCall;
 
   document.addEventListener('DOMContentLoaded', function(){
     const form = document.getElementById('loginForm');

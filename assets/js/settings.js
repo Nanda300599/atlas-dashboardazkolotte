@@ -78,13 +78,25 @@ document.addEventListener('DOMContentLoaded', function() {
     return date.toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
   }
 
+  const SHARED_MONTH_KEY = 'azko_dashboard_selected_month';
+
   function getSelectedMonth() {
-    return normalizeMonthKey(localStorage.getItem('azko_dashboard_selected_month') || getMonthKey());
+    return normalizeMonthKey(localStorage.getItem(SHARED_MONTH_KEY) || getMonthKey());
   }
 
-  function setSelectedMonth(monthKey) {
+  async function setSelectedMonth(monthKey) {
     const normalized = normalizeMonthKey(monthKey);
-    localStorage.setItem('azko_dashboard_selected_month', normalized);
+    localStorage.setItem(SHARED_MONTH_KEY, normalized);
+    localStorage.setItem('azko_dashboard_content_version', String(Date.now()));
+    try {
+      await window.AZKOAuth?.apiCall?.('/api/shared-state', {
+        method: 'PUT',
+        body: JSON.stringify({ selectedMonth: normalized, dashboard: { selectedMonth: normalized } })
+      });
+    } catch (error) {
+      console.warn('Unable to sync selected month to server', error);
+    }
+    window.dispatchEvent(new CustomEvent('azko:dashboard-month-changed', { detail: { monthKey: normalized } }));
     return normalized;
   }
 
@@ -190,7 +202,7 @@ document.addEventListener('DOMContentLoaded', function() {
     return { primaryItems, secondaryItems };
   }
 
-  function persistSharedDashboardSnapshot(monthKey = getSelectedMonth(), source = 'admin') {
+  async function persistSharedDashboardSnapshot(monthKey = getSelectedMonth(), source = 'admin') {
     const normalizedMonth = normalizeMonthKey(monthKey);
     const snapshot = {
       monthKey: normalizedMonth,
@@ -207,6 +219,14 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     localStorage.setItem('azko_dashboard_shared_snapshot', JSON.stringify(snapshot));
     localStorage.setItem('azko_dashboard_content_version', String(Date.now()));
+    try {
+      await window.AZKOAuth?.apiCall?.('/api/shared-state', {
+        method: 'PUT',
+        body: JSON.stringify({ selectedMonth: normalizedMonth, dashboard: { snapshot, selectedMonth: normalizedMonth, updatedBy: source } })
+      });
+    } catch (error) {
+      console.warn('Unable to sync dashboard snapshot to server', error);
+    }
     window.dispatchEvent(new Event('azko:content-updated'));
     return snapshot;
   }
@@ -254,6 +274,32 @@ document.addEventListener('DOMContentLoaded', function() {
     return deduplicateKpiItems(items, fallback);
   }
 
+  async function restoreSharedStateFromServer() {
+    try {
+      const response = await window.AZKOAuth?.apiCall?.('/api/shared-state');
+      if (response?.selectedMonth) {
+        const normalized = normalizeMonthKey(response.selectedMonth);
+        localStorage.setItem(SHARED_MONTH_KEY, normalized);
+        if (response.dashboard?.snapshot) {
+          const sharedSnapshot = response.dashboard.snapshot;
+          localStorage.setItem('azko_dashboard_shared_snapshot', JSON.stringify(sharedSnapshot));
+          localStorage.setItem('azko_dashboard_content_version', String(Date.now()));
+          if (sharedSnapshot?.kpis) {
+            saveItems('azko_dashboard_kpis', sharedSnapshot.kpis, normalized);
+          }
+          if (sharedSnapshot?.secondaryKpis) {
+            saveItems('azko_dashboard_secondary_kpis', sharedSnapshot.secondaryKpis, normalized);
+          }
+          if (sharedSnapshot?.modules) {
+            saveItems('azko_dashboard_modules', sharedSnapshot.modules, normalized);
+          }
+        }
+      }
+    } catch (error) {
+      console.warn('Unable to restore shared state from server', error);
+    }
+  }
+
   function populateMonthSelector(){
     const trigger = document.getElementById('settingsMonthTrigger');
     const triggerLabel = document.getElementById('settingsMonthTriggerLabel');
@@ -282,11 +328,11 @@ document.addEventListener('DOMContentLoaded', function() {
     if (caption) caption.textContent = `Data akan disimpan untuk ${selectedMonthLabel}.`;
 
     Array.from(optionsContainer.querySelectorAll('.month-picker-option')).forEach(button => {
-      button.addEventListener('click', function() {
+      button.addEventListener('click', async function() {
         const selectedMonth = this.getAttribute('data-month');
         if (!selectedMonth) return;
-        setSelectedMonth(selectedMonth);
-        syncDashboardMonthContent(selectedMonth, 'admin');
+        const normalizedMonth = await setSelectedMonth(selectedMonth);
+        syncDashboardMonthContent(normalizedMonth, 'admin');
         populateMonthSelector();
         if (popover) popover.hidden = true;
         trigger.setAttribute('aria-expanded', 'false');
@@ -325,6 +371,8 @@ document.addEventListener('DOMContentLoaded', function() {
       trigger.dataset.bound = 'true';
     }
   }
+
+  restoreSharedStateFromServer();
 
   function loadMadingContent(){
     const defaultMadingContent = 'Selamat datang di AZKO LOTTE MALL. Info penting dan update cepat hadir di sini. BISA DIEDIT OLEH ADMIN';

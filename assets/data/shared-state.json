@@ -1,0 +1,15 @@
+{
+  "selectedMonth": "2026-12",
+  "dashboard": {
+    "snapshot": {
+      "monthKey": "2026-12",
+      "selectedMonth": "2026-12",
+      "updatedAt": "test",
+      "updatedBy": "cli"
+    }
+  },
+  "monitoring": {},
+  "customerService": {},
+  "updatedAt": "2026-07-01T20:47:18.868Z",
+  "updatedBy": "admin@azkolotte.id"
+}
