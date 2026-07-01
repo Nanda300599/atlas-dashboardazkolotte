@@ -1,0 +1,32 @@
+.widget-card {
+  border-radius: 18px;
+  background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(255,255,255,0.03));
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+}
+
+.widget-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 46px rgba(0,0,0,0.24);
+}
+
+.widget-title {
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.widget-value {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.widget-body { min-height: 60px; }
+.widget-chart { height: 150px; }
+
+@media(max-width:767px){.widget-chart{height:120px}}

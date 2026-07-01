@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard Performance - AZKO LOTTE MALL</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/dashboard.css">
+  <link rel="stylesheet" href="assets/css/widgets.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside id="sidebar" class="sidebar"></aside>
+    <div class="main-panel">
+      <header id="topnav"></header>
+      <main class="page-content">
+        <section class="hero-card">
+          <div class="hero-main-column">
+            <div class="hero-copy hero-bubble editable-hero" id="heroBubble" data-edit-target="hero">
+              <span class="edit-hint">Click to edit</span>
+              <span class="eyebrow" id="heroEyebrow">Welcome to AZKO Lotte Mall <span aria-hidden="true">👋</span></span>
+              <h1 id="heroGreeting">Good morning, Administrator</h1>
+              <p id="heroDescriptionText">Orang yang peduli dengan pekerjaannya selalu tahu targetnya, karena setiap pencapaian dimulai dari kesadaran.</p>
+            </div>
+            <div class="dashboard-month-toolbar">
+              <div class="month-toolbar-card">
+                <label class="month-toolbar-label" for="dashboardMonthSelect">Pilih bulan dashboard</label>
+                <div class="month-toolbar-controls">
+                  <div class="month-picker">
+                    <button type="button" id="dashboardMonthTrigger" class="month-picker-trigger" aria-haspopup="listbox" aria-expanded="false">
+                      <span id="dashboardMonthTriggerLabel">Pilih bulan</span>
+                      <i class="fa fa-chevron-down"></i>
+                    </button>
+                    <div id="dashboardMonthPopover" class="month-picker-popover" hidden>
+                      <div id="dashboardMonthOptions" class="month-picker-list"></div>
+                    </div>
+                  </div>
+                  <span class="month-toolbar-caption" id="dashboardMonthCaption">Data tersimpan per bulan</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="hero-side-card hero-mading-card editable-news" data-edit-target="mading">
+            <span class="edit-hint">Click to edit</span>
+            <div class="hero-label"><i class="fa fa-newspaper"></i> Today's News</div>
+            <div class="hero-mading-preview" id="heroMadingPreview">Selamat datang di AZKO LOTTE MALL. Info penting dan update cepat hadir di sini. BISA DIEDIT OLEH ADMIN</div>
+          </div>
+        </section>
+
+        <section class="kpi-grid mb-4" id="overviewKpis"></section>
+      </main>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="editorModalBackdrop" hidden></div>
+  <div class="modal-card" id="editorModal" hidden>
+    <div class="modal-head">
+      <h3 id="editorModalTitle">Edit item</h3>
+      <button class="card-action-btn" id="closeEditorModalBtn" type="button" title="Close"><i class="fa fa-xmark"></i></button>
+    </div>
+    <form id="editorForm" class="modal-form">
+      <div id="editorFields"></div>
+      <div class="modal-actions">
+        <button class="btn btn-outline-secondary btn-sm" id="cancelEditorBtn" type="button">Cancel</button>
+        <button class="btn btn-primary btn-sm" id="saveEditorBtn" type="submit">Save changes</button>
+      </div>
+    </form>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="assets/js/charts.js"></script>
+  <script src="assets/js/widgets.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/api-storage.js"></script>
+  <script src="assets/js/dashboard.js"></script>
+</body>
+</html>

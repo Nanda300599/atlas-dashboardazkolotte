@@ -1,0 +1,140 @@
+{
+  "salesToday": 128400000,
+  "mtdSales": 890000000,
+  "conversionRate": 6.2,
+  "totalTransactions": 1260,
+  "storeTraffic": 1482,
+  "hourlySales": [
+    120,
+    200,
+    150,
+    300,
+    250,
+    400,
+    350,
+    300,
+    450,
+    500
+  ],
+  "categoryMix": [
+    35,
+    25,
+    20,
+    20
+  ],
+  "weeklySales": [
+    220,
+    260,
+    340,
+    310,
+    420,
+    480,
+    560
+  ],
+  "achievementPercent": 82,
+  "companyName": "AZKO LOTTE MALL",
+  "storeName": "Main Store",
+  "location": "Jakarta",
+  "kpis": [
+    {
+      "label": "Sales Total (MTD)",
+      "value": "",
+      "trend": "Set in Settings",
+      "icon": "fa-chart-line",
+      "className": "sales"
+    },
+    {
+      "label": "Achievement",
+      "value": "",
+      "trend": "Set in Settings",
+      "icon": "fa-bullseye",
+      "className": "achievement"
+    },
+    {
+      "label": "Total Traffic",
+      "value": "",
+      "trend": "Set in Settings",
+      "icon": "fa-road",
+      "className": "traffic"
+    },
+    {
+      "label": "Transaksi & CR",
+      "value": "",
+      "trend": "Set in Settings",
+      "icon": "fa-repeat",
+      "className": "transactions"
+    },
+    {
+      "label": "Google Review",
+      "value": "",
+      "trend": "Set in Settings",
+      "icon": "fa-star",
+      "className": "review"
+    },
+    {
+      "label": "New Member",
+      "value": "",
+      "trend": "Set in Settings",
+      "icon": "fa-user-plus",
+      "className": "member"
+    }
+  ],
+  "updatedAt": "2026-07-01T19:11:41.654Z",
+  "updatedBy": "admin@azkolotte.id",
+  "secondaryKpis": [
+    {
+      "label": "Proteksi",
+      "value": "",
+      "trend": "Set in Settings",
+      "icon": "fa-shield-halved",
+      "className": "protection"
+    },
+    {
+      "label": "VOC",
+      "value": "",
+      "trend": "Set in Settings",
+      "icon": "fa-headset",
+      "className": "voc"
+    },
+    {
+      "label": "Instan Upgrade",
+      "value": "",
+      "trend": "Set in Settings",
+      "icon": "fa-bolt",
+      "className": "upgrade"
+    },
+    {
+      "label": "WhatsApp Channel",
+      "value": "",
+      "trend": "Set in Settings",
+      "icon": "fa-comment-dots",
+      "className": "whatsapp"
+    }
+  ],
+  "heroEyebrow": "",
+  "heroDescription": "",
+  "heroTextScale": "1",
+  "mading": "",
+  "modules": [
+    {
+      "title": "Dashboard",
+      "icon": "fa-table-columns",
+      "description": "Executive overview for the current month"
+    },
+    {
+      "title": "KPI Detail",
+      "icon": "fa-chart-simple",
+      "description": "Daily, weekly, and monthly performance drilldown"
+    },
+    {
+      "title": "Sales Performance",
+      "icon": "fa-users",
+      "description": "Advisor, supervisor, cashier, and service visibility"
+    },
+    {
+      "title": "Monitoring",
+      "icon": "fa-sliders",
+      "description": "Flexible operational checks and escalations"
+    }
+  ]
+}

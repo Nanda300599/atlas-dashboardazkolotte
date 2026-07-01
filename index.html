@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AZKO LOTTE MALL - Entry</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>body{font-family:'Poppins',sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;background:#f4f6f9;color:#333}</style>
+</head>
+<body>
+  <div>
+    <h2>AZKO LOTTE MALL - Store Performance Dashboard</h2>
+    <p>Redirecting you to the correct page...</p>
+  </div>
+  <script>
+    // Simple client-side entry routing
+    try {
+      const session = JSON.parse(localStorage.getItem('azko_session'));
+      const now = Date.now();
+      if (session && session.expiresAt && now < session.expiresAt) {
+        window.location.href = 'dashboard.html';
+      } else {
+        window.location.href = 'login.html';
+      }
+    } catch (e) {
+      window.location.href = 'login.html';
+    }
+  </script>
+</body>
+</html>

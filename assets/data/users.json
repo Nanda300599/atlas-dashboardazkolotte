@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "username": "admin@azkolotte.id",
+    "password": "Bonus100%",
+    "name": "Administrator",
+    "role": "admin",
+    "status": "active",
+    "createdAt": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "id": 2,
+    "username": "user@azkolotte.id",
+    "password": "Satukomando",
+    "name": "Store User",
+    "role": "user",
+    "status": "active",
+    "createdAt": "2024-01-01T00:00:00.000Z"
+  }
+]

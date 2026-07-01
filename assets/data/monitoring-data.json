@@ -1,0 +1,764 @@
+{
+  "summary": {
+    "storeHealthScore": 91,
+    "targetAchievement": 87,
+    "bestPerformer": "Ayu Dewi",
+    "riskAlert": "Protection sales below target in Home Living",
+    "highestDepartment": "Home Living",
+    "recommendedAction": "Prioritize replenishment and review coaching for the evening shift",
+    "aiInsight": "Afternoon conversion is lifting while member registration remains the fastest growing KPI"
+  },
+  "filters": {
+    "departments": [
+      "All Departments",
+      "Home Living",
+      "Electronics",
+      "Fashion",
+      "Beauty"
+    ],
+    "shifts": [
+      "All Shifts",
+      "Morning",
+      "Afternoon",
+      "Evening"
+    ],
+    "categories": [
+      "All Categories",
+      "Excellent",
+      "Good",
+      "Average",
+      "Needs Improvement"
+    ]
+  },
+  "advisors": [
+    {
+      "name": "Ayu Dewi",
+      "id": "SA-101",
+      "nip": "198276001",
+      "position": "Senior Sales Advisor",
+      "team": "Home Living",
+      "shift": "Morning",
+      "attendance": "Present",
+      "dailyScore": 96,
+      "weeklyScore": 94,
+      "monthlyScore": 95,
+      "quarterlyScore": 93,
+      "yearlyScore": 92,
+      "totalSales": 24800000,
+      "salesTarget": 25000000,
+      "achievement": 99,
+      "transactions": 142,
+      "tps": 142,
+      "upt": 3.8,
+      "atv": 174500,
+      "conversion": 74,
+      "memberRegistration": 24,
+      "protectionSales": 8.2,
+      "googleReviews": 12,
+      "whatsapp": 38,
+      "sid": 96,
+      "outsideSales": 11,
+      "productivity": 95,
+      "ranking": 1,
+      "trend": "+8%"
+    },
+    {
+      "name": "Bima Prasetyo",
+      "id": "SA-102",
+      "position": "Sales Advisor",
+      "team": "Electronics",
+      "shift": "Afternoon",
+      "attendance": "Present",
+      "dailyScore": 88,
+      "weeklyScore": 86,
+      "monthlyScore": 89,
+      "quarterlyScore": 84,
+      "yearlyScore": 82,
+      "totalSales": 19800000,
+      "salesTarget": 22000000,
+      "achievement": 90,
+      "transactions": 126,
+      "upt": 3.2,
+      "atv": 157000,
+      "conversion": 68,
+      "memberRegistration": 16,
+      "protectionSales": 5.6,
+      "googleReviews": 8,
+      "whatsapp": 22,
+      "sid": 88,
+      "outsideSales": 7,
+      "productivity": 87,
+      "ranking": 3,
+      "trend": "+4%",
+      "nip": "198276002",
+      "tps": 126
+    },
+    {
+      "name": "Citra Lestari",
+      "id": "SA-103",
+      "position": "Sales Advisor",
+      "team": "Fashion",
+      "shift": "Evening",
+      "attendance": "Late",
+      "dailyScore": 74,
+      "weeklyScore": 77,
+      "monthlyScore": 79,
+      "quarterlyScore": 76,
+      "yearlyScore": 74,
+      "totalSales": 14200000,
+      "salesTarget": 18000000,
+      "achievement": 79,
+      "transactions": 98,
+      "upt": 2.6,
+      "atv": 144500,
+      "conversion": 61,
+      "memberRegistration": 9,
+      "protectionSales": 4.3,
+      "googleReviews": 6,
+      "whatsapp": 17,
+      "sid": 76,
+      "outsideSales": 5,
+      "productivity": 72,
+      "ranking": 8,
+      "trend": "-2%",
+      "nip": "198276003",
+      "tps": 98
+    },
+    {
+      "name": "Dian Rahman",
+      "id": "SA-104",
+      "position": "Team Lead",
+      "team": "Beauty",
+      "shift": "Morning",
+      "attendance": "Present",
+      "dailyScore": 91,
+      "weeklyScore": 90,
+      "monthlyScore": 92,
+      "quarterlyScore": 89,
+      "yearlyScore": 88,
+      "totalSales": 21200000,
+      "salesTarget": 22000000,
+      "achievement": 96,
+      "transactions": 134,
+      "upt": 3.4,
+      "atv": 158000,
+      "conversion": 70,
+      "memberRegistration": 18,
+      "protectionSales": 6.8,
+      "googleReviews": 10,
+      "whatsapp": 29,
+      "sid": 92,
+      "outsideSales": 9,
+      "productivity": 90,
+      "ranking": 2,
+      "trend": "+6%",
+      "nip": "198276004",
+      "tps": 134
+    },
+    {
+      "name": "Eka Sari",
+      "id": "SA-105",
+      "position": "Sales Advisor",
+      "team": "Home Living",
+      "shift": "Evening",
+      "attendance": "Present",
+      "dailyScore": 82,
+      "weeklyScore": 80,
+      "monthlyScore": 83,
+      "quarterlyScore": 79,
+      "yearlyScore": 78,
+      "totalSales": 16800000,
+      "salesTarget": 19500000,
+      "achievement": 86,
+      "transactions": 111,
+      "upt": 2.9,
+      "atv": 151000,
+      "conversion": 64,
+      "memberRegistration": 13,
+      "protectionSales": 4.9,
+      "googleReviews": 7,
+      "whatsapp": 21,
+      "sid": 81,
+      "outsideSales": 6,
+      "productivity": 79,
+      "ranking": 6,
+      "trend": "+3%",
+      "nip": "198276005",
+      "tps": 111
+    }
+  ],
+  "sid": {
+    "daily": {
+      "achievement": "112%",
+      "target": "IDR 180M",
+      "actual": "IDR 202M",
+      "achievementPercentage": 112,
+      "topPerformer": "Ayu Dewi",
+      "lowestPerformer": "Citra Lestari",
+      "departmentComparison": [
+        {
+          "name": "Home Living",
+          "value": 94
+        },
+        {
+          "name": "Electronics",
+          "value": 86
+        },
+        {
+          "name": "Fashion",
+          "value": 78
+        },
+        {
+          "name": "Beauty",
+          "value": 88
+        }
+      ],
+      "trend": [
+        72,
+        79,
+        84,
+        91,
+        112
+      ]
+    },
+    "weekly": {
+      "achievement": "104%",
+      "target": "IDR 980M",
+      "actual": "IDR 1.02B",
+      "achievementPercentage": 104,
+      "topPerformer": "Dian Rahman",
+      "lowestPerformer": "Citra Lestari",
+      "departmentComparison": [
+        {
+          "name": "Home Living",
+          "value": 91
+        },
+        {
+          "name": "Electronics",
+          "value": 84
+        },
+        {
+          "name": "Fashion",
+          "value": 76
+        },
+        {
+          "name": "Beauty",
+          "value": 87
+        }
+      ],
+      "trend": [
+        68,
+        74,
+        81,
+        92,
+        104
+      ]
+    },
+    "monthly": {
+      "achievement": "98%",
+      "target": "IDR 4.3B",
+      "actual": "IDR 4.21B",
+      "achievementPercentage": 98,
+      "topPerformer": "Ayu Dewi",
+      "lowestPerformer": "Citra Lestari",
+      "departmentComparison": [
+        {
+          "name": "Home Living",
+          "value": 97
+        },
+        {
+          "name": "Electronics",
+          "value": 88
+        },
+        {
+          "name": "Fashion",
+          "value": 79
+        },
+        {
+          "name": "Beauty",
+          "value": 90
+        }
+      ],
+      "trend": [
+        60,
+        68,
+        74,
+        82,
+        98
+      ]
+    }
+  },
+  "reviews": {
+    "daily": {
+      "reviewCount": 18,
+      "targetAchievement": 92,
+      "avgRating": 4.7,
+      "topContributor": "Ayu Dewi",
+      "lowestContributor": "Citra Lestari",
+      "growth": "+11%",
+      "trend": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    "weekly": {
+      "reviewCount": 97,
+      "targetAchievement": 88,
+      "avgRating": 4.6,
+      "topContributor": "Dian Rahman",
+      "lowestContributor": "Eka Sari",
+      "growth": "+8%",
+      "trend": [
+        12,
+        16,
+        20,
+        22,
+        26,
+        31,
+        36
+      ]
+    },
+    "monthly": {
+      "reviewCount": 402,
+      "targetAchievement": 96,
+      "avgRating": 4.8,
+      "topContributor": "Ayu Dewi",
+      "lowestContributor": "Citra Lestari",
+      "growth": "+14%",
+      "trend": [
+        40,
+        54,
+        66,
+        82,
+        96,
+        110,
+        120
+      ]
+    }
+  },
+  "protection": {
+    "daily": {
+      "sales": "IDR 4.8M",
+      "attachmentRate": 67,
+      "target": "IDR 6.5M",
+      "achievementPercentage": 74,
+      "topPerformer": "Dian Rahman",
+      "bottomPerformer": "Citra Lestari",
+      "dailyProgress": 74,
+      "monthlyProgress": 81,
+      "departmentPerformance": [
+        {
+          "name": "Home Living",
+          "value": 82
+        },
+        {
+          "name": "Electronics",
+          "value": 71
+        },
+        {
+          "name": "Fashion",
+          "value": 63
+        },
+        {
+          "name": "Beauty",
+          "value": 78
+        }
+      ],
+      "trend": [
+        44,
+        51,
+        59,
+        66,
+        74
+      ]
+    },
+    "weekly": {
+      "sales": "IDR 31.2M",
+      "attachmentRate": 69,
+      "target": "IDR 38M",
+      "achievementPercentage": 82,
+      "topPerformer": "Ayu Dewi",
+      "bottomPerformer": "Citra Lestari",
+      "dailyProgress": 82,
+      "monthlyProgress": 88,
+      "departmentPerformance": [
+        {
+          "name": "Home Living",
+          "value": 86
+        },
+        {
+          "name": "Electronics",
+          "value": 73
+        },
+        {
+          "name": "Fashion",
+          "value": 66
+        },
+        {
+          "name": "Beauty",
+          "value": 80
+        }
+      ],
+      "trend": [
+        50,
+        58,
+        64,
+        72,
+        82
+      ]
+    },
+    "monthly": {
+      "sales": "IDR 124M",
+      "attachmentRate": 72,
+      "target": "IDR 150M",
+      "achievementPercentage": 83,
+      "topPerformer": "Ayu Dewi",
+      "bottomPerformer": "Eka Sari",
+      "dailyProgress": 83,
+      "monthlyProgress": 90,
+      "departmentPerformance": [
+        {
+          "name": "Home Living",
+          "value": 88
+        },
+        {
+          "name": "Electronics",
+          "value": 74
+        },
+        {
+          "name": "Fashion",
+          "value": 69
+        },
+        {
+          "name": "Beauty",
+          "value": 81
+        }
+      ],
+      "trend": [
+        58,
+        64,
+        69,
+        76,
+        83
+      ]
+    }
+  },
+  "members": {
+    "daily": {
+      "newMembers": 18,
+      "dailyTarget": 22,
+      "monthlyTarget": 820,
+      "achievement": 82,
+      "conversionRate": 6.1,
+      "topPerformer": "Dian Rahman",
+      "bottomPerformer": "Citra Lestari",
+      "leaderboard": [
+        {
+          "name": "Dian Rahman",
+          "value": 18
+        },
+        {
+          "name": "Ayu Dewi",
+          "value": 15
+        },
+        {
+          "name": "Bima Prasetyo",
+          "value": 12
+        }
+      ],
+      "trend": [
+        8,
+        10,
+        12,
+        16,
+        18
+      ]
+    },
+    "weekly": {
+      "newMembers": 96,
+      "dailyTarget": 140,
+      "monthlyTarget": 820,
+      "achievement": 89,
+      "conversionRate": 6.7,
+      "topPerformer": "Ayu Dewi",
+      "bottomPerformer": "Citra Lestari",
+      "leaderboard": [
+        {
+          "name": "Ayu Dewi",
+          "value": 24
+        },
+        {
+          "name": "Dian Rahman",
+          "value": 21
+        },
+        {
+          "name": "Bima Prasetyo",
+          "value": 17
+        }
+      ],
+      "trend": [
+        18,
+        24,
+        31,
+        42,
+        96
+      ]
+    },
+    "monthly": {
+      "newMembers": 412,
+      "dailyTarget": 720,
+      "monthlyTarget": 820,
+      "achievement": 92,
+      "conversionRate": 7.2,
+      "topPerformer": "Ayu Dewi",
+      "bottomPerformer": "Citra Lestari",
+      "leaderboard": [
+        {
+          "name": "Ayu Dewi",
+          "value": 104
+        },
+        {
+          "name": "Dian Rahman",
+          "value": 97
+        },
+        {
+          "name": "Bima Prasetyo",
+          "value": 83
+        }
+      ],
+      "trend": [
+        60,
+        89,
+        121,
+        172,
+        412
+      ]
+    }
+  },
+  "whatsapp": {
+    "daily": {
+      "newFollowers": 34,
+      "dailyFollowers": 42,
+      "monthlyFollowers": 812,
+      "campaignPerformance": 87,
+      "messagesGenerated": 124,
+      "salesGenerated": 7.2,
+      "leadConversion": 19,
+      "topContributor": "Ayu Dewi",
+      "departmentPerformance": [
+        {
+          "name": "Home Living",
+          "value": 92
+        },
+        {
+          "name": "Electronics",
+          "value": 78
+        },
+        {
+          "name": "Fashion",
+          "value": 74
+        },
+        {
+          "name": "Beauty",
+          "value": 81
+        }
+      ],
+      "trend": [
+        15,
+        20,
+        23,
+        28,
+        34
+      ],
+      "growthPercentage": 11
+    },
+    "weekly": {
+      "newFollowers": 176,
+      "dailyFollowers": 214,
+      "monthlyFollowers": 812,
+      "campaignPerformance": 91,
+      "messagesGenerated": 612,
+      "salesGenerated": 31.8,
+      "leadConversion": 26,
+      "topContributor": "Dian Rahman",
+      "departmentPerformance": [
+        {
+          "name": "Home Living",
+          "value": 94
+        },
+        {
+          "name": "Electronics",
+          "value": 80
+        },
+        {
+          "name": "Fashion",
+          "value": 77
+        },
+        {
+          "name": "Beauty",
+          "value": 83
+        }
+      ],
+      "trend": [
+        72,
+        96,
+        118,
+        142,
+        176
+      ],
+      "growthPercentage": 18
+    },
+    "monthly": {
+      "newFollowers": 512,
+      "dailyFollowers": 680,
+      "monthlyFollowers": 812,
+      "campaignPerformance": 96,
+      "messagesGenerated": 2480,
+      "salesGenerated": 142,
+      "leadConversion": 31,
+      "topContributor": "Ayu Dewi",
+      "departmentPerformance": [
+        {
+          "name": "Home Living",
+          "value": 97
+        },
+        {
+          "name": "Electronics",
+          "value": 84
+        },
+        {
+          "name": "Fashion",
+          "value": 79
+        },
+        {
+          "name": "Beauty",
+          "value": 86
+        }
+      ],
+      "trend": [
+        112,
+        160,
+        228,
+        320,
+        512
+      ],
+      "growthPercentage": 24
+    }
+  },
+  "outsideSales": [
+    {
+      "date": "2026-06-28",
+      "advisor": "Ayu Dewi",
+      "location": "Taman Anggrek",
+      "category": "Community Activation",
+      "objective": "Promote Home Living",
+      "targetCustomers": 40,
+      "visitors": 28,
+      "potentialCustomers": 16,
+      "productsPromoted": "Dining Set, Lamp",
+      "leadsGenerated": 7,
+      "salesGenerated": 4.2,
+      "photos": 3,
+      "documents": 1,
+      "notes": "Strong response from premium households",
+      "approval": "Approved",
+      "status": "Completed",
+      "result": "Excellent"
+    },
+    {
+      "date": "2026-06-27",
+      "advisor": "Dian Rahman",
+      "location": "Central Park",
+      "category": "Service Outreach",
+      "objective": "Member conversion",
+      "targetCustomers": 35,
+      "visitors": 24,
+      "potentialCustomers": 12,
+      "productsPromoted": "Protection Plan",
+      "leadsGenerated": 5,
+      "salesGenerated": 3.6,
+      "photos": 2,
+      "documents": 2,
+      "notes": "Good follow-up on new members",
+      "approval": "Pending",
+      "status": "In Review",
+      "result": "Good"
+    },
+    {
+      "date": "2026-06-26",
+      "advisor": "Citra Lestari",
+      "location": "Mall Atrium",
+      "category": "Promotional Campaign",
+      "objective": "Drive review activity",
+      "targetCustomers": 30,
+      "visitors": 18,
+      "potentialCustomers": 8,
+      "productsPromoted": "Lifestyle Bundle",
+      "leadsGenerated": 3,
+      "salesGenerated": 2.1,
+      "photos": 1,
+      "documents": 0,
+      "notes": "Needs stronger handoff to sales floor",
+      "approval": "Approved",
+      "status": "Completed",
+      "result": "Average"
+    }
+  ],
+  "leaderboard": [
+    {
+      "name": "Ayu Dewi",
+      "sid": 96,
+      "review": 12,
+      "protection": 8.2,
+      "members": 24,
+      "whatsapp": 38,
+      "sales": 24.8,
+      "score": 94.2
+    },
+    {
+      "name": "Dian Rahman",
+      "sid": 92,
+      "review": 10,
+      "protection": 6.8,
+      "members": 18,
+      "whatsapp": 29,
+      "sales": 21.2,
+      "score": 90.7
+    },
+    {
+      "name": "Bima Prasetyo",
+      "sid": 88,
+      "review": 8,
+      "protection": 5.6,
+      "members": 16,
+      "whatsapp": 22,
+      "sales": 19.8,
+      "score": 86.8
+    },
+    {
+      "name": "Eka Sari",
+      "sid": 81,
+      "review": 7,
+      "protection": 4.9,
+      "members": 13,
+      "whatsapp": 21,
+      "sales": 16.8,
+      "score": 80.4
+    },
+    {
+      "name": "Citra Lestari",
+      "sid": 76,
+      "review": 6,
+      "protection": 4.3,
+      "members": 9,
+      "whatsapp": 17,
+      "sales": 14.2,
+      "score": 74.1
+    }
+  ]
+}

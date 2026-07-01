@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Settings - AZKO LOTTE MALL</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/dashboard.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside id="sidebar" class="sidebar"></aside>
+    <div class="main-panel">
+      <header id="topnav"></header>
+      <main class="page-content settings-shell">
+        <div class="container py-5">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+              <h3 class="mb-1">User Management</h3>
+              <p class="text-muted mb-0">Create, edit, lock, reset passwords, and manage administrator and team access.</p>
+            </div>
+            <a href="dashboard.html" class="btn btn-outline-secondary">Back to Dashboard</a>
+          </div>
+
+    <div id="accessMessage" class="alert alert-warning d-none"></div>
+
+    <div id="adminPanel" class="d-none">
+      <div class="settings-hero-card mb-4">
+        <div>
+          <span class="settings-kicker">Admin Control Center</span>
+          <h4 class="mb-2">Kelola KPI dashboard dengan lebih cepat dan profesional</h4>
+          <p class="text-muted mb-0">Pilih bulan, isi data, lalu simpan. Semua perubahan akan langsung siap digunakan di dashboard.</p>
+        </div>
+        <div class="settings-hero-badges">
+          <span class="settings-badge">Per bulan</span>
+          <span class="settings-badge">Input cepat</span>
+          <span class="settings-badge">Reset praktis</span>
+        </div>
+      </div>
+
+      <div class="card settings-card p-4 mb-4">
+        <h5 class="mb-3">Brand Logo</h5>
+        <p class="text-muted mb-3">Only admin can change the AZKO logo used in the sidebar and topbar.</p>
+        <div class="mb-3">
+          <input id="brandLogoInput" type="file" accept="image/*" class="form-control">
+        </div>
+        <div class="d-flex align-items-center gap-3 flex-wrap">
+          <img id="brandLogoPreview" src="assets/icons/AZKO LOGO.png" alt="Logo preview" class="img-thumbnail rounded-circle" style="max-width:120px; display:block;">
+          <button id="brandLogoRemoveBtn" class="btn btn-outline-secondary btn-sm">Remove logo</button>
+        </div>
+      </div>
+
+      <div class="card settings-card p-4 mb-4">
+        <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-3">
+          <div>
+            <h5 class="mb-1">Dashboard Content</h5>
+            <p class="text-muted mb-0">Buka editor lengkap untuk mengatur hero, news, dan seluruh KPI dalam satu popup.</p>
+          </div>
+          <button class="btn btn-danger btn-sm" id="openDashboardContentModalBtn" type="button">Edit KPI & Content</button>
+        </div>
+        <div class="dashboard-content-preview-card">
+          <div>
+            <h6 class="mb-1">Lebih cepat dan eye-catching</h6>
+            <p class="text-muted mb-0 small">Sekali klik, semua field KPI siap diedit tanpa harus menggulir panjang ke bawah.</p>
+          </div>
+          <span class="settings-badge">Popup editor</span>
+        </div>
+      </div>
+
+      <div id="dashboardContentModal" class="modal-overlay d-none">
+        <div class="modal-panel dashboard-content-modal-panel">
+          <div class="dashboard-content-modal-header">
+            <div>
+              <h5 class="mb-1">Dashboard Content Editor</h5>
+              <p class="text-muted mb-0 small">Atur konten dashboard untuk bulan yang dipilih.</p>
+            </div>
+            <div class="d-flex align-items-center gap-2 flex-wrap">
+              <div class="month-picker">
+                <button type="button" id="settingsMonthTrigger" class="month-picker-trigger" aria-haspopup="listbox" aria-expanded="false">
+                  <span id="settingsMonthTriggerLabel">Pilih bulan</span>
+                  <i class="fa fa-chevron-down"></i>
+                </button>
+                <div id="settingsMonthPopover" class="month-picker-popover" hidden>
+                  <div id="settingsMonthOptions" class="month-picker-list"></div>
+                </div>
+              </div>
+              <button class="btn btn-outline-secondary btn-sm" id="resetDashboardMonthDataBtn" type="button" title="Reset value dan trend untuk bulan ini">Reset</button>
+              <button class="btn btn-outline-secondary btn-sm" id="closeDashboardContentModalBtn" type="button">Close</button>
+              <button class="btn btn-danger btn-sm" id="saveDashboardContentBtn" type="button">Save</button>
+            </div>
+          </div>
+          <div class="dashboard-content-modal-body">
+            <div id="dashboardMonthCaptionSettings" class="small text-muted mb-3">Data akan disimpan untuk bulan yang dipilih.</div>
+            <div id="dashboardContentEditor"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-12">
+          <div class="card settings-card p-4">
+            <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-3">
+              <div>
+                <h5 class="mb-1">User Management</h5>
+                <p class="text-muted mb-0">Create, edit, lock, reset passwords, and manage administrator and team access.</p>
+              </div>
+              <button class="btn btn-danger btn-sm" id="newUserBtn">Create User</button>
+            </div>
+
+            <div class="row g-3 mb-3">
+              <div class="col-md-4">
+                <input id="userSearch" class="form-control" placeholder="Search users">
+              </div>
+              <div class="col-md-3">
+                <select id="userRoleFilter" class="form-select">
+                  <option value="all">All roles</option>
+                  <option value="admin">Admin</option>
+                  <option value="user">User</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <select id="userStatusFilter" class="form-select">
+                  <option value="all">All status</option>
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                  <option value="locked">Locked</option>
+                </select>
+              </div>
+              <div class="col-md-2">
+                <select id="userSort" class="form-select">
+                  <option value="name-asc">Name</option>
+                  <option value="createdAt-desc">Newest</option>
+                  <option value="lastLogin-desc">Last Login</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="table table-sm table-hover align-middle">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Last Login</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="userTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="userModal" class="modal-overlay d-none">
+    <div class="modal-panel">
+      <div class="modal-head">
+        <div>
+          <h5 class="mb-1" id="userModalTitle">Create User</h5>
+          <p class="text-muted mb-0 small">Admin-only access controls and password management.</p>
+        </div>
+        <button class="btn-close" id="closeUserModalBtn" type="button"></button>
+      </div>
+      <form id="userForm">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Full Name</label>
+            <input id="fullName" class="form-control" required>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Username</label>
+            <input id="newUsername" class="form-control" required>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Password</label>
+            <div class="input-group">
+              <input id="newPassword" type="password" class="form-control" required>
+              <button class="btn btn-outline-secondary" type="button" id="toggleUserPasswordBtn"><i class="fa fa-eye"></i></button>
+            </div>
+            <div class="progress mt-2" style="height: 6px;"><div id="passwordStrength" class="progress-bar" style="width: 0%"></div></div>
+            <div id="passwordHint" class="small text-muted mt-1"></div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Confirm Password</label>
+            <input id="confirmPassword" type="password" class="form-control" required>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Role</label>
+            <select id="newRole" class="form-select">
+              <option value="admin">Admin</option>
+              <option value="user">User</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Status</label>
+            <select id="newStatus" class="form-select">
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+              <option value="locked">Locked</option>
+            </select>
+          </div>
+          <div class="col-12">
+            <label class="form-label">Profile Photo</label>
+            <input id="profilePhoto" type="file" accept="image/*" class="form-control">
+            <img id="profilePhotoPreview" class="img-thumbnail mt-2" style="max-width: 120px; display: none;" alt="Profile preview">
+          </div>
+          <div class="col-12">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="forceReset">
+              <label class="form-check-label" for="forceReset">Require password reset on next login</label>
+            </div>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button class="btn btn-outline-secondary" type="button" id="cancelUserModalBtn">Cancel</button>
+          <button class="btn btn-danger" type="button" id="generatePasswordBtn">Generate Password</button>
+          <button class="btn btn-danger" type="submit">Save User</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/api-storage.js"></script>
+  <script src="assets/js/dashboard.js"></script>
+  <script src="assets/js/settings.js"></script>
+</body>
+</html>
